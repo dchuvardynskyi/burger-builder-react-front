@@ -21,7 +21,8 @@ class BurgerBuilder extends Component {
             meat: 0,
             salad: 0,
         },
-        totalPrice: 4
+        totalPrice: 4,
+        orderDisabled: true,
     }
 
     addIngredientHandler = (ingredientType) => {
@@ -37,6 +38,7 @@ class BurgerBuilder extends Component {
             ingredients: updatedIngredients,
             totalPrice: updatedTotalPrice
         })
+        this.updateOrderDisabledState(updatedIngredients)
     }
 
     removeIngredientHandler = (ingredientType) => {
@@ -53,8 +55,10 @@ class BurgerBuilder extends Component {
                 ingredients: updatedIngredients,
                 totalPrice: updatedTotalPrice
             })
+            this.updateOrderDisabledState(updatedIngredients)
         }
     }
+
     disableInfo = () => {
         const ingredients = {
             ...this.state.ingredients
@@ -62,19 +66,31 @@ class BurgerBuilder extends Component {
         for (let ingredientType in ingredients) {
             ingredients[ingredientType] = ingredients[ingredientType] <= 0
         }
-        console.log(ingredients)
         return ingredients
+    }
+
+    updateOrderDisabledState (ingredients) {
+        const totalIngredientsCount = Object.keys(ingredients)
+        .map( (ingredientType) => {
+            return ingredients[ingredientType]
+        })
+        .reduce( (sum, currentCount) => {
+            return sum + currentCount
+        })
+        console.log(totalIngredientsCount)
+        this.setState({orderDisabled: totalIngredientsCount <= 0})
     }
 
     render() {
         return (
             <Aux>
                 <Burger ingredients={this.state.ingredients}/>
-                <BuildControls 
+                <BuildControls
                     disableInfo={this.disableInfo()}
-                    ingredientAdd={this.addIngredientHandler} 
+                    ingredientAdd={this.addIngredientHandler}
                     ingredientRemove={this.removeIngredientHandler}
                     totalPrice={this.state.totalPrice}
+                    orderDisabled={this.state.orderDisabled}
                 />
             </Aux>
         );
