@@ -9,23 +9,29 @@ import styles from './Layout.css'
 
 class Layout extends Component {
     state ={
-        showSideDrawer: true
+        showSideDrawer: false
     }
 
     sideDrawerClosedhandler = () => {
         this.setState({showSideDrawer: false})
     }
 
+    sideDrawerToggleHandler = () => {
+        this.setState( (prevState) => {
+            return { showSideDrawer: !prevState.showSideDrawer }
+        })
+    }
+
     render() {
         return (
             <Aux>
-                <Toolbar 
-
+                <Toolbar
+                    drawToggleClick={this.sideDrawerToggleHandler}
                 />
                 <SideDrawer 
                     open={this.state.showSideDrawer}
-                    closed={this.sideDrawerClosedhandler}/
-                >
+                    closed={this.sideDrawerClosedhandler}
+                />
                 <main className={styles.Content}>
                     {this.props.children}
                 </main>
