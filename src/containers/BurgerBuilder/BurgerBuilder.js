@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Aux from '../../hoc/Aux'
+import Aux from '../../hoc/Aux/Aux'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import OrderSummury from '../../components/Burger/OrderSummury/OrderSummury'
@@ -110,7 +110,7 @@ class BurgerBuilder extends Component {
                 </Modal>
 
                 <Burger ingredients={this.state.ingredients}/>
-                
+
                 <BuildControls
                     disableInfo={this.disableInfo()}
                     ingredientAdd={this.addIngredientHandler}
